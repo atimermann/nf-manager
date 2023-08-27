@@ -1,0 +1,9 @@
+---
+# Não deixe um grupo vazio se não irá substituir tudo
+# Consulte configuração em node_modules/@agtm/node-framework/*.yaml
+monitor:
+  enabled: false
+logger:
+  console:
+    enabled: true
+    handleExceptions: true
