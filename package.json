@@ -1,7 +1,7 @@
 {
   "name": "@agtm/nf-manager",
   "version": "0.1.0",
-  "bin": "src/run.mjs",
+  "bin": "src/main.mjs",
   "description": "Framework Manager, a web interface for the management of framework components, including the job scheduling system, databases, logs, machine resource utilization, sockets, and other related elements",
   "main": "src/run.mjs",
   "scripts": {
@@ -36,6 +36,12 @@
       "node_modules/figlet"
     ]
   },
+  "files": [
+    "src",
+    "config.default.yaml",
+    "config.development.yaml",
+    "config.production.yaml"
+  ],
   "engines": {
     "node": ">=18"
   },
