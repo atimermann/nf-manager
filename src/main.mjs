@@ -12,9 +12,9 @@ import { pathToFileURL, fileURLToPath } from 'url'
 import { Application } from '@agtm/node-framework'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
-const nf_manager = new Application(__dirname, 'nf_manager')
+const nfManager = new Application(__dirname, 'nfManager')
 
-export default nf_manager
+export default nfManager
 
 if (import.meta.url === pathToFileURL(process.argv[1]).href) {
   throw new Error('This module should not be executed directly, use \'run.mjs\' instead.')

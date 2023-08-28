@@ -4,7 +4,54 @@ Api e interface web para gestão do node-framework
 
 # Instalação
 
+Instale com
+
+    npm i @agtm/nf-manager
+
+Em seguida é necessário carregar a aplicação em 
+
+    src/main.mjs
+
+Adicione
+
+```javascript
+    import nfManager from '@agtm/nf-manager'
+    myApplication.loadApplication(nfManager)
+```
+    
+Exemplo:
+```javascript
+
+import { __dirname } from '@agtm/util'
+import { Application, checkExecution } from '@agtm/node-framework'
+import nfManager from '@agtm/nf-manager'
+
+checkExecution(import.meta.url)
+
+const myApplication = new Application(__dirname(import.meta.url), 'myApplication')
+myApplication.loadApplication(nfManager)
+
+export default datalensAutomation
+
+```
 # Configuração
+
+Caso queira utilizar a interface web disponível na aplicação defina uma rota em config.default.yaml:
+
+```yaml
+httpServer:
+  customStaticRoutes:
+    - staticRoute: "/manager"
+      staticPath: "public/nfManager/main"
+
+  # Necessário para liberar a execução do nuxt (executa script inline)
+  helmet:
+    contentSecurityPolicy:
+      directives:
+        scriptSrcElem:
+          - "'self'"
+          - "'unsafe-inline'"
+```
 
 # Acessando API (WebSocket)
 

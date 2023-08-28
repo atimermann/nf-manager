@@ -9,6 +9,7 @@
  */
 
 import { Server } from '@agtm/node-framework'
-import nf_manager from './main.mjs'
+import nfManager from './main.mjs'
 
-await Server.init(nf_manager)
+console.warn('Direct execution of np-manager only in development and for testing.')
+await Server.init(nfManager)

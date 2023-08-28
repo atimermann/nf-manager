@@ -1,9 +1,8 @@
 {
   "name": "@agtm/nf-manager",
   "version": "0.1.1",
-  "bin": "src/main.mjs",
   "description": "Framework Manager, a web interface for the management of framework components, including the job scheduling system, databases, logs, machine resource utilization, sockets, and other related elements",
-  "main": "src/run.mjs",
+  "main": "src/main.mjs",
   "scripts": {
     "publish-patch": "npm version patch && npm publish --access public && git push",
     "publish-minor": "npm version minor && npm publish --access public && git push",
@@ -37,10 +36,7 @@
     ]
   },
   "files": [
-    "src",
-    "config.default.yaml",
-    "config.development.yaml",
-    "config.production.yaml"
+    "src"
   ],
   "engines": {
     "node": ">=18"
