@@ -7,7 +7,7 @@ httpServer:
 
   customStaticRoutes:
     - staticRoute: "/manager"
-      staticPath: "public/nf_manager/main"
+      staticPath: "public/nfManager/main"
 
   # Necessário para liberar a execução do nuxt (executa script inline)
   helmet:

@@ -11,5 +11,7 @@
 import { Server } from '@agtm/node-framework'
 import nfManager from './main.mjs'
 
-console.warn('Direct execution of np-manager only in development and for testing.')
+console.warn('--------------------------------------------------------------------------------------------------')
+console.warn('-------------- Direct execution of np-manager only in development and for testing. -------------- ')
+console.warn('--------------------------------------------------------------------------------------------------')
 await Server.init(nfManager)

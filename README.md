@@ -44,14 +44,30 @@ httpServer:
     - staticRoute: "/manager"
       staticPath: "public/nfManager/main"
 
-  # Necessário para liberar a execução do nuxt (executa script inline)
+  # Necessário para liberar a execução do nuxt (executa script inline) Adaptar de acordo com o projeto
   helmet:
     contentSecurityPolicy:
       directives:
         scriptSrcElem:
           - "'self'"
           - "'unsafe-inline'"
+        connect-src:
+          - "'self'"
+          - "http://localhost:4001"
+          - "ws://localhost:4001"
 ```
+
+Em seguida execute:
+
+```shell
+npm run install-assets
+```
+ou, instale o @agtm/ncli e execute:
+```shell
+ncli-install-assets
+```
+
+
 
 # Acessando API (WebSocket)
 
