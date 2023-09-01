@@ -4,9 +4,9 @@
   "description": "Framework Manager, a web interface for the management of framework components, including the job scheduling system, databases, logs, machine resource utilization, sockets, and other related elements",
   "main": "src/main.mjs",
   "scripts": {
-    "publish-patch": "npm version patch && npm publish --access public && git push",
-    "publish-minor": "npm version minor && npm publish --access public && git push",
-    "publish-major": "npm version major && npm publish --access public && git push",
+    "publish-patch": "./scripts/publish.sh patch",
+    "publish-minor": "./scripts/publish.sh minor",
+    "publish-major": "./scripts/publish.sh major",
     "start": "NODE_ENV=production node .",
     "dev": "./scripts/dev.sh",
     "dev:debug": "node --inspect-brk --loader=./esm-loader.mjs .",
