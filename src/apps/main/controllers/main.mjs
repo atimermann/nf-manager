@@ -14,9 +14,6 @@ export default class MainController extends Controller {
       // Outputs updated information of all jobs
 
       const jobsInformation = JobManager.getJobsInformation()
-
-      console.log(jobsInformation)
-
       socket.emit('jobsList', jobsInformation)
     })
   }
