@@ -1,0 +1,1 @@
+import{_ as t}from"./page.e59558ab.js";import{_ as e}from"./_plugin-vue_export-helper.c27b6911.js";import{c as n,b as c,o as s}from"./entry.88e07fcf.js";const _={},r={class:"hold-transition login-page"};function a(i,m){const o=t;return s(),n("div",r,[c(o)])}const l=e(_,[["render",a]]);export{l as default};
