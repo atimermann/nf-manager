@@ -31,8 +31,7 @@
     "scripts": "src/apps/**/controllers/*.mjs",
     "assets": [
       "src",
-      "node_modules/config",
-      "node_modules/figlet"
+      "!src/public"
     ]
   },
   "files": [

@@ -92,3 +92,6 @@ sw.*
 # VSCode user files
 .vscode
 .env.bak
+
+/src/public
+/src/apps/main/assets
