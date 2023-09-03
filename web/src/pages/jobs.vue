@@ -25,8 +25,8 @@
           <Column field="controller" header="Controller" />
           <Column field="scheduleText" header="Agendamento" />
           <Column field="workers" header="Workers" />
-          <Column field="concurrency" header="Instancias" />
-          <Column field="persistent" header="Persistente" />
+          <Column field="concurrency" header="Inst." />
+          <Column field="persistent" header="Pers." />
           <Column field="status" header="Status" />
         </DataTable>
       </template>
@@ -69,19 +69,20 @@ function updateJobsList () {
 
   Object.keys(jobsIndex).forEach((key) => {
     const jobInfo = jobsIndex[key]
-    console.log(`Chave: ${key}`, jobInfo)
+
+    let scheduleText = ''
+    if (jobInfo.schedule && jobInfo.schedule !== 'now') {
+      scheduleText = cronstrue.toString(jobInfo.schedule, { locale: 'pt_BR' })
+    } else if (jobInfo.schedule !== 'now') {
+      scheduleText = 'Na inicialização'
+    }
 
     jobs.value.push({
       name: jobInfo.name,
       application: jobInfo.applicationName,
       app: jobInfo.appName,
       controller: jobInfo.controllerName,
-      scheduleText: jobInfo.schedule
-        ? cronstrue.toString(
-          jobInfo.schedule,
-          { locale: 'pt_BR' }
-        )
-        : '',
+      scheduleText,
       workers: jobInfo.workers.join(', '),
       concurrency: jobInfo.concurrency,
       persistent: jobInfo.persistent ? 'Sim' : 'Não',
