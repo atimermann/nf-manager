@@ -5,9 +5,9 @@
       <!--        subtitle-->
       <!--      </template>-->
 
-      <template #title>
-        Lista de Jobs
-      </template>
+<!--      <template #title>-->
+<!--        Lista de Jobs-->
+<!--      </template>-->
 
       <!--      <template #footer>-->
       <!--        Footer-->
@@ -18,16 +18,19 @@
           table-style="min-width: 50rem"
           show-gridlines
           class="p-datatable-sm"
+          paginator
+          :rows="20"
+          sortMode="multiple"
         >
-          <Column field="name" header="Job" />
-          <Column field="application" header="Projeto" />
-          <Column field="app" header="App" />
-          <Column field="controller" header="Controller" />
-          <Column field="scheduleText" header="Agendamento" />
-          <Column field="workers" header="Workers" />
-          <Column field="concurrency" header="Inst." />
-          <Column field="persistent" header="Pers." />
-          <Column field="status" header="Status" />
+          <Column sortable field="application" header="Projeto" />
+          <Column sortable field="app" header="App" />
+          <Column sortable field="controller" header="Controller" />
+          <Column sortable field="name" header="Job" />
+          <Column sortable field="scheduleText" header="Agendamento" />
+          <Column sortable field="workers" header="Workers" />
+          <Column sortable field="concurrency" header="Inst." />
+          <Column sortable field="persistent" header="Pers." />
+          <Column sortable field="status" header="Status" />
         </DataTable>
       </template>
     </Card>
@@ -73,7 +76,7 @@ function updateJobsList () {
     let scheduleText = ''
     if (jobInfo.schedule && jobInfo.schedule !== 'now') {
       scheduleText = cronstrue.toString(jobInfo.schedule, { locale: 'pt_BR' })
-    } else if (jobInfo.schedule !== 'now') {
+    } else if (jobInfo.schedule === 'now') {
       scheduleText = 'Na inicialização'
     }
 
@@ -83,7 +86,7 @@ function updateJobsList () {
       app: jobInfo.appName,
       controller: jobInfo.controllerName,
       scheduleText,
-      workers: jobInfo.workers.join(', '),
+      workers: jobInfo.workers?.join(', '),
       concurrency: jobInfo.concurrency,
       persistent: jobInfo.persistent ? 'Sim' : 'Não',
       status: jobInfo.status
