@@ -8,7 +8,7 @@ Instale com
 
     npm i @agtm/nf-manager
 
-Em seguida é necessário carregar a aplicação em 
+Em seguida é necessário carregar a aplicação em
 
     src/main.mjs
 
@@ -16,14 +16,16 @@ Adicione
 
 ```javascript
     import nfManager from '@agtm/nf-manager'
-    myApplication.loadApplication(nfManager)
+
+myApplication.loadApplication(nfManager)
 ```
-    
+
 Exemplo:
+
 ```javascript
 
-import { __dirname } from '@agtm/util'
-import { Application, checkExecution } from '@agtm/node-framework'
+import {__dirname} from '@agtm/util'
+import {Application, checkExecution} from '@agtm/node-framework'
 import nfManager from '@agtm/nf-manager'
 
 checkExecution(import.meta.url)
@@ -31,9 +33,10 @@ checkExecution(import.meta.url)
 const myApplication = new Application(__dirname(import.meta.url), 'myApplication')
 myApplication.loadApplication(nfManager)
 
-export default datalensAutomation
+export default myApplication
 
 ```
+
 # Configuração
 
 Caso queira utilizar a interface web disponível na aplicação defina uma rota em config.default.yaml:
@@ -62,15 +65,23 @@ Em seguida execute:
 ```shell
 npm run install-assets
 ```
+
 ou, instale o @agtm/ncli e execute:
+
 ```shell
 ncli-install-assets
 ```
 
+# Storage (Docker)
 
+NFClient utiliza SQLite para gravar informações sobre os jobs, como lista de erro e status, a base de dados é salva
+localmente no diretório storage, portanto é necessário dar permissão escrita e criar um volume no docker para este diretório
+
+    storage/nfmonitor.sqlite.db
+
+No futuro, se necessário teremos suporte a banco de dados externos
 
 # Acessando API (WebSocket)
-
 
 # Aproveitando os componentes em vez de utilizar o frontend completo
 
@@ -102,7 +113,7 @@ Apontando para
 
 Com isso para acessar a interface web usar:
 
-    http://<ip>/manager
+    http://<url>/manager
 
 Código fonte da interface está na pasta web, usar o comando a seguir para gerar e copiar frontent para node-framework:
 

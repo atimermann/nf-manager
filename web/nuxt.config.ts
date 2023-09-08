@@ -6,5 +6,11 @@ export default defineNuxtConfig({
   app: {
     baseURL: '/manager'
   },
-  extends: ['@agtm/nuxt-layer-adminlte-primeface']
+  extends: ['@agtm/nuxt-layer-adminlte-primeface'],
+  runtimeConfig: {
+    public: {
+      SOCKET_URL: process.env.SOCKET_URL,
+      SOCKET_PORT: process.env.SOCKET_PORT
+    }
+  }
 })

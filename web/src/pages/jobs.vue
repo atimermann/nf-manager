@@ -5,9 +5,9 @@
       <!--        subtitle-->
       <!--      </template>-->
 
-<!--      <template #title>-->
-<!--        Lista de Jobs-->
-<!--      </template>-->
+      <!--      <template #title>-->
+      <!--        Lista de Jobs-->
+      <!--      </template>-->
 
       <!--      <template #footer>-->
       <!--        Footer-->
@@ -20,7 +20,7 @@
           class="p-datatable-sm"
           paginator
           :rows="20"
-          sortMode="multiple"
+          sort-mode="multiple"
         >
           <Column sortable field="application" header="Projeto" />
           <Column sortable field="app" header="App" />
@@ -31,6 +31,25 @@
           <Column sortable field="concurrency" header="Inst." />
           <Column sortable field="persistent" header="Pers." />
           <Column sortable field="status" header="Status" />
+          <Column sortable field="errorCount" header="Erros">
+            <template #body="{ data }">
+              <div :style="data.errorCount > 0 ? 'background-color: var(--red-200)' : ''" class="text-center">
+                {{ data.errorCount }}
+              </div>
+            </template>
+          </Column>
+          <Column>
+            <template #body="{ data }">
+              <Button
+                v-tooltip="'Overview'"
+                type="button"
+                icon="pi pi-book"
+                text
+                size="small"
+                @click="toOverview(data.uuid)"
+              />
+            </template>
+          </Column>
         </DataTable>
       </template>
     </Card>
@@ -42,15 +61,18 @@
 import Card from 'primevue/card'
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
+import Button from 'primevue/button'
 import { io } from 'socket.io-client'
 import cronstrue from 'cronstrue/i18n'
+
+const config = useRuntimeConfig()
 
 definePageMeta({
   layout: 'admin',
   title: 'Jobs'
 })
 
-const socket = io('http://localhost:4001/jobs')
+const socket = io(`${config.public.SOCKET_URL}:${config.public.SOCKET_PORT}/jobs`)
 
 let jobsIndex = {}
 
@@ -81,6 +103,7 @@ function updateJobsList () {
     }
 
     jobs.value.push({
+      uuid: jobInfo.uuid,
       name: jobInfo.name,
       application: jobInfo.applicationName,
       app: jobInfo.appName,
@@ -89,9 +112,21 @@ function updateJobsList () {
       workers: jobInfo.workers?.join(', '),
       concurrency: jobInfo.concurrency,
       persistent: jobInfo.persistent ? 'Sim' : 'Não',
-      status: jobInfo.status
+      status: jobInfo.status,
+      errorCount: jobInfo.errorCount
     })
   })
+}
+
+/**
+ * Navega para página de detalhes do Job
+ *
+ * @param uuid    Identificador do Job
+ *
+ * @returns {Promise<void>}
+ */
+async function toOverview (uuid) {
+  await navigateTo(`/job-overview/${uuid}`)
 }
 
 </script>

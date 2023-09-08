@@ -44,7 +44,10 @@
   "dependencies": {
     "@agtm/node-framework": "^4",
     "@agtm/util": "^4.0.2",
-    "esm-module-alias": "^2.0.3"
+    "esm-module-alias": "^2.0.3",
+    "sql-template-strings": "^2.2.2",
+    "sqlite": "^5.0.1",
+    "sqlite3": "^5.1.6"
   },
   "devDependencies": {
     "@agtm/ncli": "^5.0.0",
