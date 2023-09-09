@@ -3,6 +3,9 @@
   "version": "0.2.8",
   "description": "Framework Manager, a web interface for the management of framework components, including the job scheduling system, databases, logs, machine resource utilization, sockets, and other related elements",
   "main": "src/main.mjs",
+  "bin": {
+    "nfmanager-setEnvVar": "./scripts/setEnvVar.sh"
+  },
   "scripts": {
     "publish-patch": "./scripts/publish.sh patch",
     "publish-minor": "./scripts/publish.sh minor",
@@ -11,7 +14,7 @@
     "dev": "./scripts/dev.sh",
     "dev:debug": "node --inspect-brk --loader=./esm-loader.mjs .",
     "monitor": "npx nf-monitor",
-    "update": "npm update @agtm/ncli @agtm/node-framework @agtm/ncli && npm list @agtm/node-framework @agtm/ncli @agtm/util",
+    "update": "npm update @agtm/ncli @agtm/node-framework @agtm/ncli && npm list @agtm/node-framework @agtm/ncli @agtm/util && (cd web && npm run update)",
     "build-pkg": "scripts/build-pkg.sh",
     "build-debug": "npx pkg -t node14-linux-x64 --out-path build .",
     "install-assets": "npx ncli install-assets",
@@ -36,6 +39,7 @@
   },
   "files": [
     "src",
+    "scripts/setEnvVar.sh",
     "!src/public"
   ],
   "engines": {

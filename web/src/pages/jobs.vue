@@ -72,7 +72,7 @@ definePageMeta({
   title: 'Jobs'
 })
 
-const socket = io(`${config.public.SOCKET_URL}:${config.public.SOCKET_PORT}/jobs`)
+const socket = io(`${config.public.SOCKET_HOSTNAME}:${config.public.SOCKET_PORT}/jobs`)
 
 let jobsIndex = {}
 

@@ -6,3 +6,5 @@
 rm -rf src/apps/main/assets
 cp -r web/.output/public src/apps/main/assets
 npm run install-assets
+# Substitui as váriaveis
+./scripts/setEnvVar.sh

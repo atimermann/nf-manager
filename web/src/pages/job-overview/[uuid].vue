@@ -50,7 +50,7 @@ definePageMeta({
   title: 'Job - Visão Geral'
 })
 
-const socket = io(`${config.public.SOCKET_URL}:${config.public.SOCKET_PORT}/job`, { query: { uuid: jobUuid } })
+const socket = io(`${config.public.SOCKET_HOSTNAME}:${config.public.SOCKET_PORT}/job`, { query: { uuid: jobUuid } })
 
 socket.on('connect', () => {
   setTimeout(() => {

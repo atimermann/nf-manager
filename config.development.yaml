@@ -13,4 +13,4 @@ httpServer:
   port: 3002
 
 socket:
-  port: 4002
+  enabled: false

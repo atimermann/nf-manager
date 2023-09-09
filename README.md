@@ -72,10 +72,31 @@ ou, instale o @agtm/ncli e execute:
 ncli-install-assets
 ```
 
+por fim execute
+
+```shell
+npx nfmanager-setEnvVar
+```
+
+**IMPORTANTE:** Deve ser executado na pasta raiz do projeto, este script assume que o fonte foi copiado para
+./src/public/nfManager/main
+
+Se alterou o caminho, deve copiar o script e alterar o diretório manualmente
+
+Este script configura as váraiveis de ambiente SOCKET_HOSTNAME e SOCKET_PORT que é a porta que a interface web vai tentar se
+conectar. **Deve ser configurado no .env do projeto**, é a porta do servidor socket
+
+Edite o arquivo .env e defina as variaveis:
+
+SOCKET_HOSTNAME=http://[HOST_DO_SOCKETIO_BACKEND]
+SOCKET_PORT=[PORTA_DO_SOCKETIO_BACKEND]
+
+
 # Storage (Docker)
 
 NFClient utiliza SQLite para gravar informações sobre os jobs, como lista de erro e status, a base de dados é salva
-localmente no diretório storage, portanto é necessário dar permissão escrita e criar um volume no docker para este diretório
+localmente no diretório storage, portanto é necessário dar permissão escrita e criar um volume no docker para este
+diretório
 
     storage/nfmonitor.sqlite.db
 
