@@ -24,16 +24,15 @@ Exemplo:
 
 ```javascript
 
-import {__dirname} from '@agtm/util'
-import {Application, checkExecution} from '@agtm/node-framework'
+import { Application, checkExecution } from '@agtm/node-framework'
 import nfManager from '@agtm/nf-manager'
 
 checkExecution(import.meta.url)
 
-const myApplication = new Application(__dirname(import.meta.url), 'myApplication')
-myApplication.loadApplication(nfManager)
+const MyApplication = new Application(__dirname(import.meta.url), 'MyApplication')
+MyApplication.loadApplication(nfManager)
 
-export default myApplication
+export default MyApplication
 
 ```
 
