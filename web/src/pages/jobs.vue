@@ -85,9 +85,7 @@ socket.on('jobsList', jobInformation => {
   updateJobsList()
 })
 
-const jobs = ref(
-  []
-)
+const jobs = ref([])
 
 function updateJobsList () {
   jobs.value = []
