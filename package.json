@@ -13,6 +13,7 @@
     "start": "NODE_ENV=production node .",
     "dev": "./scripts/dev.sh",
     "dev:debug": "node --inspect-brk --loader=./esm-loader.mjs .",
+    "dev:link": "npm link @agtm/util",
     "monitor": "npx nf-monitor",
     "update": "npm update @agtm/ncli @agtm/node-framework @agtm/ncli && npm list @agtm/node-framework @agtm/ncli @agtm/util && (cd web && npm run update)",
     "build-pkg": "scripts/build-pkg.sh",
@@ -24,6 +25,10 @@
     "lint": "npx eslint --fix src",
     "test": "jest",
     "generate-web": "./scripts/generate-web.sh"
+  },
+  "exports": {
+    ".": "./src/main.mjs",
+    "./web": "./web/index.mjs"
   },
   "author": "André Timermann <andre@timermann.com.br>",
   "license": "ISC",
@@ -47,7 +52,7 @@
   },
   "dependencies": {
     "@agtm/node-framework": "^4",
-    "@agtm/util": "^4.0.2",
+    "@agtm/util": "^4.2.0",
     "esm-module-alias": "^2.0.3",
     "sql-template-strings": "^2.2.2",
     "sqlite": "^5.0.1",
