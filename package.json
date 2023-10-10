@@ -22,8 +22,8 @@
     "create-app": "npx ncli create-app",
     "create-controller": "npx ncli create-controller",
     "lint:test": "npx eslint src",
-    "lint": "npx eslint --fix src",
-    "test": "jest",
+    "lint": "npx eslint --fix src web",
+    "test": "npm run lint",
     "generate-web": "./scripts/generate-web.sh"
   },
   "exports": {

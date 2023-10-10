@@ -10,3 +10,4 @@ rules:
     quotes:
         - error
         - single
+ignorePatterns: ['src/public/**/*']
