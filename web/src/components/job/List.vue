@@ -42,7 +42,7 @@ import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
 import Button from 'primevue/button'
 import { io } from 'socket.io-client'
-import cronstrue from 'cronstrue/i18n'
+import cronstrue from 'cronstrue/i18nvi
 import { getEnvConfig } from '@agtm/util/nuxt'
 
 const socketHostname = getEnvConfig('socketHostname')

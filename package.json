@@ -55,7 +55,7 @@
   },
   "dependencies": {
     "@agtm/node-framework": "^4",
-    "@agtm/util": "^4.2.0",
+    "@agtm/util": "^4.2.1",
     "esm-module-alias": "^2.0.3",
     "sql-template-strings": "^2.2.2",
     "sqlite": "^5.0.1",
