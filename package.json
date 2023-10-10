@@ -45,7 +45,10 @@
   "files": [
     "src",
     "scripts/setEnvVar.sh",
-    "!src/public"
+    "!src/public",
+    "web/index.mjs",
+    "web/src/components",
+    "web/src/assets"
   ],
   "engines": {
     "node": ">=18"
