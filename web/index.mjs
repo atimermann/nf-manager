@@ -6,8 +6,8 @@
  *
  */
 
-import ErrorList from './src/components/job/errorList'
-import List from './src/components/job/List'
+import ErrorList from './src/components/job/errorList.vue'
+import List from './src/components/job/List.vue'
 
 export {
   ErrorList as JobErrorList,
