@@ -18,7 +18,7 @@ export default class MainController extends Controller {
     await NfManagerDatabase.createTables()
 
     // Registra erros no processamento
-    WorkerManager.events.on('processError', async jobProcess => {
+    WorkerManager.events.on('processError', async (worker, jobProcess) => {
       const jobData = await NfManagerDatabase.addProcessError(jobProcess)
 
       this.namespace('/job')

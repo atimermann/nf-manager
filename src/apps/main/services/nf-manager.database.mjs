@@ -63,10 +63,11 @@ export default class NfManagerDatabase {
    *
    * @static
    * @async
-   * @param {object} jobProcess - The job process containing details about the error.
+   * @param {JobProcess} jobProcess - The job process containing details about the error.
    * @returns {Promise<object>} - The process error data that was added to the database.
    */
   static async addProcessError (jobProcess) {
+
     await this.db.run(
       SQL`INSERT INTO jobError (uuid, jobName, worker, jobInstance, errorDescription)
     VALUES (${jobProcess.worker.job.uuid}, ${jobProcess.worker.job.name}, ${jobProcess.worker.name}, ${jobProcess.id}, ${jobProcess.errorsMessage.join('\n')});`

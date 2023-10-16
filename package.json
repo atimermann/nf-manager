@@ -15,7 +15,7 @@
     "dev:debug": "node --inspect-brk --loader=./esm-loader.mjs .",
     "dev:link": "npm link @agtm/util",
     "monitor": "npx nf-monitor",
-    "update": "npm update @agtm/ncli @agtm/node-framework @agtm/ncli && npm list @agtm/node-framework @agtm/ncli @agtm/util && (cd web && npm run update)",
+    "update": "npm update @agtm/ncli @agtm/node-framework @agtm/util && npm list @agtm/node-framework @agtm/ncli @agtm/util && (cd web && npm run update)",
     "build-pkg": "scripts/build-pkg.sh",
     "build-debug": "npx pkg -t node14-linux-x64 --out-path build .",
     "install-assets": "npx ncli install-assets",
@@ -54,7 +54,7 @@
     "node": ">=18"
   },
   "dependencies": {
-    "@agtm/node-framework": "^4",
+    "@agtm/node-framework": "^5.0.3",
     "@agtm/util": "^4.2.1",
     "cronstrue": "^2.32.0",
     "esm-module-alias": "^2.0.3",

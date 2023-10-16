@@ -7,15 +7,11 @@
  * Framework Manager, a web interface for the management of framework components, including the job scheduling system, databases, logs, machine resource utilization, sockets, and other related elements
  *
  */
-import { dirname } from 'path'
-import { pathToFileURL, fileURLToPath } from 'url'
-import { Application } from '@agtm/node-framework'
+import { __dirname } from '@agtm/util'
+import { checkExecution } from '@agtm/node-framework'
 
-const __dirname = dirname(fileURLToPath(import.meta.url))
-const nfManager = new Application(__dirname, 'nfManager')
+checkExecution(import.meta.url)
 
-export default nfManager
-
-if (import.meta.url === pathToFileURL(process.argv[1]).href) {
-  throw new Error('This module should not be executed directly, use \'run.mjs\' instead.')
+export default function applicationLoader (Application){
+  return new Application(__dirname(import.meta.url), 'nfManager')
 }
