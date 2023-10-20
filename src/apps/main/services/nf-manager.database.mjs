@@ -42,21 +42,154 @@ export default class NfManagerDatabase {
    * @returns {Promise<void>}
    */
   static async createTables () {
+    // TODO: MIGRAR PRO KNEXJS (PRISMA não é bom pra criação de tabela dinamicamente)
+
     await this.db.exec(`
-      CREATE TABLE IF NOT EXISTS jobError (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        uuid VARCHAR(32),
-        jobName TEXT,
-        worker TEXT,
-        jobInstance INTEGER,
-        errorTimestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        errorDescription TEXT,
-        note TEXT
-      );
+
+    CREATE TABLE IF NOT EXISTS jobError (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      uuid VARCHAR(64),
+      jobName TEXT,
+      worker TEXT,
+      jobInstance INTEGER,
+      errorTimestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      errorDescription TEXT,
+      note TEXT
+    );
+
+    CREATE TABLE IF NOT EXISTS jobExecution (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      jobUuid VARCHAR(64) NOT NULL,
+      workerName VARCHAR(64) NOT NULL,
+      startAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+      endAt TIMESTAMP,
+      status CHAR(1)  DEFAULT 'E' CHECK( status IN ('S', 'F', 'E') ) NOT NULL
+    );
+
+    CREATE TABLE IF NOT EXISTS jobExecutionProcess (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      jobExecutionId INTEGER NOT NULL,
+      instance INTEGER NOT NULL,
+      pid INTEGER NOT NULL,
+      startAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+      endAt TIMESTAMP,
+      status CHAR(1) DEFAULT 'E' CHECK( status IN ('S', 'F', 'E') ) NOT NULL,
+      FOREIGN KEY (jobExecutionId) REFERENCES jobExecution(id)
+    );
+
+    CREATE TABLE IF NOT EXISTS jobExecutionProcessLog (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      datetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+      jobExecutionProcessId INTEGER NOT NULL,
+      level VARCHAR(32),
+      message TEXT,
+      FOREIGN KEY (jobExecutionProcessId) REFERENCES jobExecutionProcess(id)
+    );
+
     `)
 
     await this.db.exec('CREATE INDEX IF NOT EXISTS uuid_index ON jobError (uuid);')
   }
+
+  //= ===================================================================================================
+  // JobExecution (TODO: Criar model)
+  //= ===================================================================================================
+
+  /**
+   *
+   * @param {Worker} worker
+   * @returns {Promise<*>}
+   */
+  static async addJobExecution (worker) {
+    const runResult = await this.db.run(
+      SQL`INSERT INTO jobExecution (jobUuid, workerName)
+      VALUES (${worker.job.uuid}, ${worker.name});`
+    )
+    return await this.db.get(
+      SQL`SELECT * FROM jobExecution WHERE id = ${runResult.lastID};`
+    )
+  }
+
+  static async getJobExecutionByUUID (uuid) {
+    return await this.db.all(SQL`SELECT * FROM jobExecution WHERE jobUuid = ${uuid}`)
+  }
+
+  //= ===================================================================================================
+  // JobExecutionProcess (TODO: Criar model)
+  //= ===================================================================================================
+
+  /**
+   *
+   * @param newJobExecution
+   * @param {JobProcess} process
+   * @returns {Promise<*>}
+   */
+  static async addJobExecutionProcess (newJobExecution, process) {
+    const runResult = await this.db.run(
+      SQL`INSERT INTO jobExecutionProcess (jobExecutionId, instance, pid)
+      VALUES (${newJobExecution.id}, ${process.id}, ${process.childProcess.pid});`
+    )
+
+    return await this.db.get(
+      SQL`SELECT * FROM jobExecutionProcess WHERE id = ${runResult.lastID};`
+    )
+  }
+
+  static async getProcessListByJobExecutionId (executionId) {
+    return await this.db.all(
+      SQL`SELECT * FROM jobExecutionProcess WHERE jobExecutionId = ${executionId};`
+    )
+  }
+
+  //= ===================================================================================================
+  // JobExecutionProcessLog (TODO: Criar model)
+  //= ===================================================================================================
+
+  /**
+   *
+   * @param currentExecution
+   * @param {JobProcess} jobProcess
+   * @param {string}  data
+
+   * @returns {Promise<*|undefined>}
+   */
+  static async addJobExecutionProcessLog (currentExecution, jobProcess, data) {
+    if (data) {
+      try {
+        const log = JSON.parse(data)
+
+        const jobExecutionProcess = await this.db.get(
+          SQL`SELECT id FROM jobExecutionProcess WHERE jobExecutionId = ${currentExecution.id} AND instance = ${jobProcess.id};`
+        )
+
+        if (log.level && log.message) {
+          const runResult = await this.db.run(
+            SQL`INSERT INTO jobExecutionProcessLog ( jobExecutionProcessId, level, message) VALUES (${jobExecutionProcess.id}, ${log.level}, ${log.message});`
+          )
+
+          return await this.db.get(
+            SQL`SELECT * FROM jobExecutionProcessLog WHERE id = ${runResult.lastID};`
+          )
+        }
+      } catch (e) {
+        if (e.name === 'SyntaxError') {
+          return await this.addJobExecutionProcessLog(currentExecution, jobProcess, JSON.stringify({ level: 'error', message: data }))
+        } else {
+          throw e
+        }
+      }
+    }
+  }
+
+  static async getJobExecutionProcessLogByjobProcessId (jobExecutionProcessId) {
+    return await this.db.all(
+      SQL`SELECT * FROM jobExecutionProcessLog WHERE jobExecutionProcessId = ${jobExecutionProcessId};`
+    )
+  }
+
+  //= ===================================================================================================
+  // ProcessError (TODO: remover)
+  //= ===================================================================================================
 
   /**
    * Adds a process error to the database and returns the data that was just inserted.
@@ -67,7 +200,6 @@ export default class NfManagerDatabase {
    * @returns {Promise<object>} - The process error data that was added to the database.
    */
   static async addProcessError (jobProcess) {
-
     await this.db.run(
       SQL`INSERT INTO jobError (uuid, jobName, worker, jobInstance, errorDescription)
     VALUES (${jobProcess.worker.job.uuid}, ${jobProcess.worker.job.name}, ${jobProcess.worker.name}, ${jobProcess.id}, ${jobProcess.errorsMessage.join('\n')});`

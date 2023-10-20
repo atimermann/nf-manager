@@ -32,9 +32,6 @@
   },
   "author": "André Timermann <andre@timermann.com.br>",
   "license": "ISC",
-  "_moduleAliases": {
-    "~": "src"
-  },
   "pkg": {
     "scripts": "src/apps/**/controllers/*.mjs",
     "assets": [
@@ -54,8 +51,7 @@
     "node": ">=18"
   },
   "dependencies": {
-    "@agtm/node-framework": "^5.0.3",
-    "@agtm/util": "^4.2.1",
+    "@agtm/util": "^4.2.4",
     "cronstrue": "^2.32.0",
     "esm-module-alias": "^2.0.3",
     "sql-template-strings": "^2.2.2",
@@ -63,7 +59,7 @@
     "sqlite3": "^5.1.6"
   },
   "devDependencies": {
-    "@agtm/ncli": "^5.0.0",
+    "@agtm/ncli": "^5.4.0",
     "@babel/preset-env": "^7.21.5",
     "babel-jest": "^29.5.0",
     "babel-plugin-module-resolver": "^5.0.0",
